@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
+import java.util.List;
+
 public class MyCustomConditions {
 
     public static ExpectedCondition<WebElement> attributeContains(By locator, String attr, String value) {
@@ -27,9 +29,28 @@ public class MyCustomConditions {
         };
     }
 
+    public static ExpectedCondition<String> listNthElementHasText(By locator, int elNo, String expText) {
+        return new ExpectedCondition<String>() {
+            private WebElement currentNumber = null;
+            String currentProductName = null;
 
+            public String apply(WebDriver webDriver) {
+                List<WebElement> elements = webDriver.findElements(locator);
+                String currentProductName =  elements.get(elNo).getAttribute("title");
 
+       //         System.out.println("Name of product: " + elements.get(elNo).getAttribute("title"));
+                if (currentProductName.equals(expText))
+                    return currentProductName;
+                else
+                    return null;
+            }
 
+            public String toString() {
+                return String
+                        .format("number of elements found by %s to be \"%s\". Current title: \"%s\"", currentNumber, currentProductName);
+            }
+        };
+    }
 
 
     public static ExpectedCondition<Boolean> pageIsLoaded(String expTitle, String expUrl) {

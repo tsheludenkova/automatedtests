@@ -19,13 +19,19 @@ import static pages.AccountPage.Buttons.*;
 
 public class MyStore extends BaseGUITest {
 
+    @Test
+    public void findProduct() {
+        MainPage mainPage = new MainPage(driver);
+        mainPage.searchFor("Dress");
+        mainPage.clickOnSearchBtn();
+        mainPage.productIsPresent();
+    }
 
     @Test
     public void openMainPageTestWithTitleAndUrlAvailable() {
         MainPage mainPage = new MainPage(driver);
         Assert.assertTrue("MainPage wasn't loaded", mainPage.mainPageIsLoaded());
     }
-
 
     @Test
     public void openMainPageTest() {

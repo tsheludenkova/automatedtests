@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+
 import java.util.List;
 import java.util.function.Function;
 
@@ -29,8 +30,6 @@ public abstract class BasePage {
     protected WebElement op(By locator, Function<By, ExpectedCondition<WebElement>> condition) {
         return waitFor(condition.apply(locator));
     }
-
-
 
     protected WebElement $(By locator) {
         return waitFor(ExpectedConditions.presenceOfElementLocated(locator));
@@ -79,7 +78,9 @@ public abstract class BasePage {
             return false;
         }
     }
-
+    protected String verifyListNthElementHasText(By locator, int number, String expText) {
+        return waitFor(MyCustomConditions.listNthElementHasText(locator, number, expText));
+    }
 
 
 }

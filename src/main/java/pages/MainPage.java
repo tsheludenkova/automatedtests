@@ -37,6 +37,8 @@ public class MainPage extends BasePage {
     private By firstProductOnThePage = By.xpath("//*[@id=\"list\"]/a/i");
     private By discountOfFirstProduct = By.xpath("//*[@id=\"center_column\"]/ul/li[1]/div/div/div[3]/div/div[1]/span[3]");
     private By oldProductPrice = By.xpath("//*[@id=\"center_column\"]/ul/li[1]/div/div/div[3]/div/div[1]/span[2]");
+    private By listOfProducts = By.xpath("//*[@class=\"product-container\"]/div//*[@class=\"product-name\"]");
+    private By searchInputButton = By.id("search_query_top");
 
 
 
@@ -77,5 +79,9 @@ public class MainPage extends BasePage {
         return verifyIsPageIsLoaded("My Store", "http://automationpractice.com/index.php");
     }
 
+    public String productIsPresent() {
+
+        return verifyListNthElementHasText(listOfProducts, 4, "Printed Dress");
+    }
 
 }
