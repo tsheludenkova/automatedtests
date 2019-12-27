@@ -9,6 +9,14 @@
     <artifactId>automated-tests</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <log4j2.version>2.11.1</log4j2.version>
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>yyyy-MM-dd_HH-mm-ss</maven.build.timestamp.format>
+        <buildDirectory>${basedir}/target</buildDirectory>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -18,28 +26,6 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.20.1</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.maven.surefire</groupId>
-                        <artifactId>surefire-junit47</artifactId>
-                        <version>2.20.1</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.seleniumhq.selenium</groupId>
-                        <artifactId>selenium-java</artifactId>
-                        <version>3.141.59</version>
-                    </dependency>
-
-
-                </dependencies>
-                <configuration>
-                    <groups>verifySumCalculation.PrimitiveDataTest,verifySumCalculation.ObjectDataTest</groups>
                 </configuration>
             </plugin>
         </plugins>
@@ -62,7 +48,7 @@
                             </dependency>
                         </dependencies>
                         <configuration>
-                            <groups>verifySumCalculation.PrimitiveDataTest</groups>
+                            <groups>testcategories.PrimitiveDataTest</groups>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -70,8 +56,6 @@
         </profile>
         <profile>
             <id>ObjectDataTest</id>
-            <activation>
-                <activeByDefault>true</activeByDefault></activation>
             <build>
                 <plugins>
                     <plugin>
@@ -86,7 +70,34 @@
                             </dependency>
                         </dependencies>
                         <configuration>
-                            <groups>verifySumCalculation.ObjectDataTest</groups>
+                            <groups>testcategories.ObjectDataTest</groups>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>AllTests</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.0.0-M4</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.apache.maven.surefire</groupId>
+                                <artifactId>surefire-junit47</artifactId>
+                                <version>3.0.0-M4</version>
+                            </dependency>
+                        </dependencies>
+                        <configuration>
+                            <systemPropertyVariables>
+                                <report.path>./reports/build-${timestamp}</report.path>
+                            </systemPropertyVariables>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -105,6 +116,18 @@
             <artifactId>selenium-java</artifactId>
             <version>3.141.59</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>

@@ -38,7 +38,11 @@ public class MyCustomConditions {
                 List<WebElement> elements = webDriver.findElements(locator);
                 String currentProductName =  elements.get(elNo).getAttribute("title");
 
-       //         System.out.println("Name of product: " + elements.get(elNo).getAttribute("title"));
+                for (int i = 0; i < elements.size(); i++) {
+                    System.out.println("№ "+ i + " : " + elements.get(i).getAttribute("title"));
+                }
+
+                System.out.println("Number of product № "+ elNo + " Name of product: " + elements.get(elNo).getAttribute("title"));
                 if (currentProductName.equals(expText))
                     return currentProductName;
                 else
@@ -47,7 +51,7 @@ public class MyCustomConditions {
 
             public String toString() {
                 return String
-                        .format("number of elements found by %s to be \"%s\". Current title: \"%s\"", currentNumber, currentProductName);
+                        .format("Title to be \"%s\". Current title: \"%s\"", expText, currentProductName);
             }
         };
     }

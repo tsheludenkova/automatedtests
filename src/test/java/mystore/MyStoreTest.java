@@ -4,11 +4,14 @@ import org.hamcrest.CoreMatchers;
 import org.junit.*;
 import org.junit.rules.ErrorCollector;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.AccountPage;
 import pages.MainPage;
+import pages.OrderHistoryPage;
+import pages.ShoppingCartPage;
 import test.BaseGUITest;
 
 import java.util.List;
@@ -17,7 +20,45 @@ import static org.hamcrest.core.Is.is;
 import static pages.AccountPage.Buttons.*;
 
 
-public class MyStore extends BaseGUITest {
+public class MyStoreTest extends BaseGUITest {
+    JavascriptExecutor js = (JavascriptExecutor) driver;
+
+    @Test
+    public void buyingOfProduct()  {
+        MainPage mainPage = new MainPage(driver);
+        ShoppingCartPage shoppingCartPage = new ShoppingCartPage(driver);
+        OrderHistoryPage orderHistoryPage = new OrderHistoryPage(driver);
+        final String emailAddress = "autopractice.com@gmail.com";
+        final String password = "AUTOpractice";
+        mainPage.signIn(emailAddress, password);
+        mainPage.searchFor("Dress");
+        mainPage.clickOnSearchBtn();
+        String expectedProductName = mainPage.getProductName();
+
+        System.out.println("Product name" + expectedProductName);
+        mainPage.clickOnFirstProductOnThePage();
+        mainPage.clickOnTheAddToCartButton();
+        mainPage.clickOnProceedToCheckoutButton();
+        shoppingCartPage.scrollDown();
+        shoppingCartPage.clickOnProceedToCheckoutButtonStep1();
+        shoppingCartPage.clickOnProceedToCheckoutButtonStep3();
+        shoppingCartPage.setCheckboxAboutTermsOfService();
+        shoppingCartPage.clickOnProceedToCheckoutButtonStep4();
+        shoppingCartPage.clickOnPayByBankWire();
+        shoppingCartPage.clickOnConfirmOrder();
+        shoppingCartPage.backToOrders();
+        orderHistoryPage.clickOnFirstItemOfOrdersList();
+        String actualProductName = orderHistoryPage.getProductNameFromOrdersList();
+
+        System.out.println("Product name from order list" + actualProductName);
+        Assert.assertThat(actualProductName, CoreMatchers.containsString(expectedProductName));
+
+    }
+
+    @Test
+    public void checkIFraimeContainsText() {
+
+    }
 
     @Test
     public void findProduct() {
@@ -116,13 +157,7 @@ public class MyStore extends BaseGUITest {
         System.out.println(actualResult);
         System.out.println(expectedResult);
         Assert.assertEquals(actualResult,expectedResult,0.005);
-
-
-
-
-
         Thread.sleep(5000);
-
     }
 
     @Test
@@ -187,7 +222,10 @@ public class MyStore extends BaseGUITest {
 
     @Test
     public void signInTest() {
-
+        MainPage mainPage = new MainPage(driver);
+        final String emailAddress = "autopractice.com@gmail.com";
+        final String password = "AUTOpractice";
+        mainPage.signIn(emailAddress, password);
     }
 
     @Test

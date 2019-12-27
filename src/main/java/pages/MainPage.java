@@ -34,11 +34,17 @@ public class MainPage extends BasePage {
 
     private By searchButton = By.name("submit_search");
     private By productPrice = By.xpath("//*[@id=\"center_column\"]/ul/li[1]/div/div/div[3]/div/div[1]/span[1]");
+    private By productName = By.xpath("//*[@class=\"product-container\"]/div//*[@class=\"product-name\"]");
     private By firstProductOnThePage = By.xpath("//*[@id=\"list\"]/a/i");
     private By discountOfFirstProduct = By.xpath("//*[@id=\"center_column\"]/ul/li[1]/div/div/div[3]/div/div[1]/span[3]");
     private By oldProductPrice = By.xpath("//*[@id=\"center_column\"]/ul/li[1]/div/div/div[3]/div/div[1]/span[2]");
     private By listOfProducts = By.xpath("//*[@class=\"product-container\"]/div//*[@class=\"product-name\"]");
     private By searchInputButton = By.id("search_query_top");
+    private By addToCartButton = By.xpath("//*[@id=\"center_column\"]/ul/li[1]/div/div/div[3]/div/div[2]/a[1]/span");
+    private By proceedToCheckoutButton = By.xpath("//*[@id=\"layer_cart\"]/div[1]/div[2]/div[4]/a/span");
+
+
+
 
 
 
@@ -60,6 +66,13 @@ public class MainPage extends BasePage {
         op(searchButton, CLICKABLE).click();
     }
 
+    public String getNameOfFirstProductOnPage() {
+        op(firstProductOnThePage, CLICKABLE).getAttribute("nme");
+        String ProductName = op(firstProductOnThePage, CLICKABLE).getAttribute("name");
+
+        return ProductName;
+    }
+
     public void clickOnFirstProductOnThePage() {
         op(firstProductOnThePage, CLICKABLE).click();
     }
@@ -67,6 +80,12 @@ public class MainPage extends BasePage {
     public String getProductPrice() {
         return op(productPrice, VISIBLE).getText();
     }
+
+    public String getProductName() {
+        return op(productName, VISIBLE).getAttribute("title");
+    }
+
+
 
     public String getDiscount() {
         return op(discountOfFirstProduct, VISIBLE).getText();
@@ -81,7 +100,18 @@ public class MainPage extends BasePage {
 
     public String productIsPresent() {
 
-        return verifyListNthElementHasText(listOfProducts, 4, "Printed Dress");
+        return verifyListNthElementHasText(listOfProducts, 3, "Printed Chiffon Dress");
     }
 
-}
+    public void clickOnTheAddToCartButton() {
+        op(addToCartButton, CLICKABLE).click();
+        }
+
+    public void clickOnProceedToCheckoutButton() {
+        op(proceedToCheckoutButton, CLICKABLE).click();
+    }
+
+
+
+    }
+
