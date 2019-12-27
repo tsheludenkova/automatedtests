@@ -21,7 +21,7 @@ import static pages.AccountPage.Buttons.*;
 
 
 public class MyStoreTest extends BaseGUITest {
-    JavascriptExecutor js = (JavascriptExecutor) driver;
+
 
     @Test
     public void buyingOfProduct()  {
